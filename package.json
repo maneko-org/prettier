@@ -1,0 +1,45 @@
+{
+  "name": "@maneko/prettier",
+  "type": "module",
+  "version": "0.0.1",
+  "packageManager": "pnpm@10.18.3",
+  "description": "Shared Prettier config for our projects",
+  "license": "MIT",
+  "homepage": "https://github.com/maneko-org/prettier",
+  "repository": {
+    "url": "https://github.com/maneko-org/prettier"
+  },
+  "bugs": {
+    "url": "https://github.com/maneko-org/prettier/issues"
+  },
+  "exports": {
+    ".": {
+      "import": "./index.js"
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "index.js",
+  "files": [
+    "index.js"
+  ],
+  "scripts": {
+    "format": "prettier --write \"*.js\"",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "bumpp": "^10.3.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.4",
+    "prettier": "^3.6.2"
+  },
+  "peerDependencies": {
+    "prettier": "^3.6.2"
+  },
+  "lint-staged": {
+    "*.{js,ts}": [
+      "prettier --write"
+    ]
+  }
+}
