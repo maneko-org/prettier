@@ -31,6 +31,12 @@ yarn add -D prettier @maneko/prettier
 npm install -D prettier @maneko/prettier
 ```
 
+If you using TailwindCSS, install the optional plugin:
+
+```bash
+pnpm add -D prettier-plugin-tailwindcss
+```
+
 ## Basic usage
 
 ```js
@@ -61,6 +67,13 @@ If you use `lint-staged` + `husky` your setup might look like this:
   }
 }
 ```
+
+## API Reference
+
+| Option        | Type      | Default | Description                                        |
+| ------------- | --------- | ------- | -------------------------------------------------- |
+| `printWidth`  | `number`  | `80`    | Line length before wrapping                        |
+| `tailwindcss` | `boolean` | `false` | Enables `prettier-plugin-tailwindcss` if installed |
 
 ## IDE integration (VS Code)
 
