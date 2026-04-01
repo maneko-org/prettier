@@ -1,126 +1,114 @@
 # @maneko/prettier-config
 
-[![Stars](https://img.shields.io/github/stars/maneko-org/prettier-config?style=flat-square&logoColor=white)](https://github.com/maneko-org/prettier-config/stargazers)
-[![Forks](https://img.shields.io/github/forks/maneko-org/prettier-config?style=flat-square&logoColor=white)](https://github.com/maneko-org/prettier-config/network/members)
-[![Pull Requests](https://img.shields.io/github/issues-pr/maneko-org/prettier-config?style=flat-square&logoColor=white)](https://github.com/maneko-org/prettier-config/pulls)
-[![Issues](https://img.shields.io/github/issues/maneko-org/prettier-config?style=flat-square&logoColor=white)](https://github.com/maneko-org/prettier-config/issues)
-[![Contributors](https://img.shields.io/github/contributors/maneko-org/prettier-config?style=flat-square&logoColor=white)](https://github.com/maneko-org/prettier-config/graphs/contributors)
-[![License](https://img.shields.io/github/license/maneko-org/prettier-config?style=flat-square&logoColor=white)](https://github.com/maneko-org/prettier-config/blob/main/LICENSE)
+[![Version](https://img.shields.io/npm/v/@maneko/prettier-config?style=flat&colorA=111111&colorB=000000)](https://npmjs.com/package/@maneko/prettier-config)
+[![Downloads](https://img.shields.io/npm/dt/@maneko/prettier-config.svg?style=flat&colorA=222222&colorB=000000)](https://npmjs.com/package/@maneko/prettier-config)
+[![License](https://img.shields.io/npm/l/@maneko/prettier-config?style=flat&colorA=333333&colorB=000000)](https://npmjs.com/package/@maneko/prettier-config)
+[![Build with](https://img.shields.io/badge/built_with-tsdown-000000?style=flat)](https://tsdown.dev)
 
-A shared, ESM-first Prettier config for our projects - small API, zero friction, and sensible defaults.
+Opinionated Prettier config preset.
 
-## Why use this
+## Usage
 
-- **Unified style** across our repositories.
-- **Zero-config**: `export default prettier()` works out of the box.
-- **ESM-first**: works naturally with modern JS/TS projects.
-- **Customizable**: pass options or extend the factory for project needs.
-- **Prettier 3+ compatible** and plays nicely with `lint-staged`, `husky`, CI pipelines.
+### Install
 
-## Installation
-
-Install the package (choose your package manager):
-
-```bash
-# pnpm (recommended)
-pnpm add -D prettier @maneko/prettier-config
-
-# yarn
-yarn add -D prettier @maneko/prettier-config
-
-# npm
-npm install -D prettier @maneko/prettier-config
+```sh
+pnpm i -D prettier @maneko/prettier-config
 ```
 
-For TailwindCSS users, install this optional plugin:
+### Create config
 
-```bash
-pnpm add -D prettier-plugin-tailwindcss
-```
-
-## Quick start
-
-Create a Prettier config file in your project.
-
-ESM project (`.prettierrc.mjs`):
+Create `prettier.config.mjs` in your project root:
 
 ```js
-import { prettier } from '@maneko/prettier-config';
+// prettier.config.mjs
+import { prettier } from '@maneko/prettier-config'
 
-export default prettier();
+export default prettier()
 ```
 
-CJS project (`.prettierrc.cjs` / `.prettierrc.js`):
+### Add scripts for package.json
 
-```js
-const { prettier } = require('@maneko/prettier-config');
-
-module.exports = prettier();
-```
-
-## Customize / override defaults
-
-Pass options to override Prettier's defaults:
-
-```js
-import { prettier } from '@maneko/prettier-config';
-
-export default prettier({
-  printWidth: 100,
-  singleQuote: true,
-  trailingComma: 'none'
-  // any other Prettier options
-});
-```
-
-The function simply merges your options with the shared defaults — minimal API, familiar behavior.
-
-## Scripts & lint-staged
-
-Add scripts to `package.json`:
+For example:
 
 ```json
 {
   "scripts": {
-    "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format": "prettier --write ."
   }
 }
 ```
 
-Example `lint-staged` + `husky`:
+## Customization
+
+Normally you only need to import the `prettier` preset:
+
+```js
+// prettier.config.js
+import { prettier } from '@maneko/prettier-config'
+
+export default prettier()
+```
+
+And that's it! Or you can customize each setting to your liking:
+
+```js
+// prettier.config.js
+import { prettier } from '@maneko/prettier-config'
+
+export default prettier({
+  // Custom print width
+  printWidth: 80,
+
+  // Enable Tailwind CSS plugin
+  plugins: ['prettier-plugin-tailwindcss'],
+})
+```
+
+### Lint Staged
+
+If you want auto-fix before every commit, you can add the following to your `package.json`:
 
 ```json
 {
+  "simple-git-hooks": {
+    "pre-commit": "pnpm lint-staged"
+  },
   "lint-staged": {
-    "**/*.{js,ts,jsx,tsx,mjs,cjs,json,md}": ["pnpm format"]
+    "*": "prettier --write"
   }
 }
 ```
 
-## IDE (VS Code) integration
+and then
 
-Install the Prettier VS Code extension: `esbenp.prettier-vscode`.
+```bash
+pnpm i -D lint-staged simple-git-hooks
 
-Recommended `.vscode/settings.json`:
-
-```jsonc
-{
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.formatOnSave": true,
-  "prettier.resolveGlobalModules": false,
-  "prettier.requireConfig": true
-  // If you use an ESLint config for formatting, you may want:
-  // "eslint.format.enable": false
-}
+// to active the hooks
+npx simple-git-hooks
 ```
 
-> If you use both `@maneko/eslint` and `@maneko/prettier-config`, let Prettier handle pure formatting (quotes, spacing, commas) and ESLint handle logic and style rules.
+## Versioning Policy
 
-## Contributing
+This project follows [Semantic Versioning](https://semver.org/) for releases. However, since this is just a config and involves opinions and many moving parts, we don't treat rules changes as breaking changes.
 
-PRs welcome. Keep changes small and document any new opinionated rules.
+### Changes Considered as Breaking Changes
+
+- Node.js version requirement changes
+- Huge refactors that might break the config
+- Plugins made major changes that might break the config
+- Changes that might affect most of the codebases
+
+### Changes Considered as Non-breaking Changes
+
+- Enable/disable rules and plugins (that might become stricter)
+- Rules options changes
+- Version bumps of dependencies
+
+### I prefer XXX...
+
+Sure, you can configure and override rules locally in your project to fit your needs. If that still does not work for you, you can always fork this repo and maintain your own.
 
 ## License
 
-`@maneko/prettier-config` is licensed under the MIT License. See the `LICENSE` file in the repository.
+[@maneko/prettier-config](https://github.com/maneko-group/prettier-config) is licensed under the [MIT](./LICENSE) license.

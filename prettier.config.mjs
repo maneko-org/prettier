@@ -1,3 +1,3 @@
-import { prettier } from './dist/index.mjs';
+import { prettier } from './dist/index.mjs'
 
-export default prettier();
+export default prettier()
