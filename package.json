@@ -1,7 +1,7 @@
 {
   "name": "@maneko/prettier-config",
   "type": "module",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "packageManager": "pnpm@10.18.3",
   "description": "Maneko Group's Prettier config",
   "author": "Maneko Group",
