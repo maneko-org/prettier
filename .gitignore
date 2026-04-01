@@ -1,6 +1,6 @@
 # Binaries
-node_modules/
 dist/
+node_modules/
 
 # IDEs files
 .vscode/
